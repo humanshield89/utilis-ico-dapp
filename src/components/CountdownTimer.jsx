@@ -17,6 +17,8 @@ import { Typography } from "@mui/material";
  * @constructor
  */
 const CountdownTimer = ({ date, ...props }) => {
+  console.log("CountdownTimer:date", date);
+  console.log("CountdownTimer:dateNow", Date.now() / 1000);
   return (
     <Countdown
       renderer={({ hours, minutes, seconds, days }) => (

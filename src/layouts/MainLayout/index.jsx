@@ -165,7 +165,7 @@ const MainLayout = ({ children }) => {
           />
         )}
         <Header />
-        <Container maxWidth={"lg"} sx={{ flexGrow: 1 }}>
+        <Container maxWidth={"lg"} sx={{ flexGrow: 1, paddingBottom: "32px" }}>
           {children}
         </Container>
         <Footer />

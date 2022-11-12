@@ -33,10 +33,7 @@ const Footer = () => {
           {` © ${new Date().getFullYear()}`}
         </Typography>
         <Typography>
-          built with ❤️ by{" "}
-          <Link href="https://github.com/humanshield89">
-            @humanshield89 | Rachid Boudjelida
-          </Link>
+          <Link href="https://github.com/humanshield89">Visit Website</Link>
         </Typography>
       </Container>
     </Box>

@@ -18,7 +18,7 @@ const MouseRotatedCard = ({ children, denominator, maxAngle, ...rest }) => {
       calcX = (maxAngle * calcX) / Math.abs(calcX);
     if (Math.abs(calcY) > maxAngle)
       calcY = (maxAngle * calcY) / Math.abs(calcY);
-    console.log(calcX, calcY);
+
     element.style.transform =
       "perspective(1200px)" +
       "rotateX(" +

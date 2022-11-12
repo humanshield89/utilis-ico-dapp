@@ -30,8 +30,8 @@ const GlowingText = ({ text, variant }) => {
           ? "none"
           : `${glowKeyframs} 1s ease-in-out infinite alternate`,
         textAlign: "center",
-        marginTop: "1.5rem",
-        marginBottom: "1.5rem",
+        marginTop: "0.0rem",
+        marginBottom: "0.5rem",
       }}
     >
       {text}
