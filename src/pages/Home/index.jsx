@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import usePreSale from "../../hooks/PreLaunch/usePresale";
 import {
   BarredProgress,
+  ConnectButton,
   useERC20Allowance,
   useERC20Balance,
   useWalletContext,
@@ -23,7 +24,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import Link from "@mui/material/Link";
 import useNoSlipagePrice from "../../hooks/PreLaunch/useNoSlipagePrice";
-import { useBalance } from "@web3modal/react";
+import { useAccount } from "@web3modal/react";
 import { BuyModal } from "../../components/MaxTextField";
 import useSalePrice from "../../hooks/PreLaunch/useSalePrice";
 import useTotalSale from "../../hooks/PreLaunch/useTotalSale";
@@ -66,11 +67,11 @@ const HomePage = () => {
   const walletContext = useWalletContext();
   const [started, setStarted] = React.useState(false);
   const [ended, setEnded] = React.useState(false);
+  const account = useAccount();
+
   const presale = usePreSale({
     address: process.env.PRESALE_ADDRESS,
-    provider: walletContext.signer
-      ? walletContext.signer
-      : walletContext.provider,
+    provider: walletContext.provider,
   });
   const usdtPrice = useSalePrice({
     address: process.env.PRESALE_ADDRESS,
@@ -96,9 +97,7 @@ const HomePage = () => {
 
   const usdtAllowance = useERC20Allowance({
     tokenAddress: process.env.USDT_ADDRESS,
-    provider: walletContext.signer
-      ? walletContext.signer
-      : walletContext.provider,
+    provider: walletContext.provider,
     ownerAddress: walletContext.address,
     spenderAddress: process.env.PRESALE_ADDRESS,
   });
@@ -107,7 +106,27 @@ const HomePage = () => {
 
   const [selectedCurrency, setSelectedCurrency] = useState();
 
-  const bnbBalance = useBalance({ addressOrName: walletContext.address });
+  const [bnbBalance, setBnbBalance] = useState({ data: {} });
+
+  useEffect(() => {
+    if (account.isReady) {
+      walletContext.provider
+        .getBalance(walletContext.address)
+        .then((balance) => {
+          setBnbBalance({
+            data: {
+              value: balance,
+              decimals: 18,
+              formatted: ethers.utils.formatUnits(balance, 18),
+            },
+          });
+        });
+    }
+  }, [account.isReady]);
+
+  useEffect(() => {
+    console.log("bnbBalance", bnbBalance);
+  }, [bnbBalance]);
 
   const usdtBalance = useERC20Balance({
     tokenAddress: process.env.USDT_ADDRESS,
@@ -270,6 +289,19 @@ const HomePage = () => {
         </Box>
 
         <Box sx={{ minHeight: 20 }} />
+
+        {!walletContext.isConnected && (
+          <>
+            <ConnectButton
+              chainId={process.env.NEXT_PUBLIC_CHAIN_ID}
+              color={"primary"}
+              fullwidth
+              sx={{ width: "100%" }}
+            />
+            <Box sx={{ minHeight: 20 }} />
+          </>
+        )}
+
         <Box
           sx={{
             display: "flex",
@@ -284,7 +316,8 @@ const HomePage = () => {
               ended ||
               !totalSale ||
               totalSale?.data?.amount == soldAmount?.data?.amount ||
-              bnbBalance?.data?.value == 0
+              bnbBalance?.data?.value == 0 ||
+              !walletContext.isConnected
             }
             fullWidth
             variant={"outlined"}
@@ -309,7 +342,8 @@ const HomePage = () => {
               ended ||
               !totalSale ||
               totalSale?.data?.amount == soldAmount?.data?.amount ||
-              usdtBalance?.data?.amount == 0
+              usdtBalance?.data?.amount == 0 ||
+              !walletContext.isConnected
             }
             fullWidth
             variant={"outlined"}
@@ -333,15 +367,23 @@ const HomePage = () => {
                 // approve
                 setBusy(true);
                 try {
+                  console.log(
+                    await account?.account.connector?.getSigner({
+                      chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+                    })
+                  );
                   await ercCalls.approve(
                     process.env.USDT_ADDRESS,
-                    walletContext.signer,
+                    await account?.account.connector?.getSigner({
+                      chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+                    }),
                     process.env.PRESALE_ADDRESS,
                     ethers.constants.MaxUint256
                   );
                   enqueueSnackbar("USDT Approved", { variant: "info" });
                   await usdtAllowance.refetch();
                 } catch (e) {
+                  console.log(e);
                   enqueueSnackbar("Error while approving", {
                     variant: "error",
                   });
@@ -377,16 +419,20 @@ const HomePage = () => {
             fontSize: "0.8em",
           }}
         >
-          <span>
-            Balance:{" "}
-            <b>
-              {bnbBalance.data?.formatted?.substring(
-                0,
-                bnbBalance?.data?.formatted.indexOf(".") + 3
-              )}
-            </b>{" "}
-            $BNB
-          </span>
+          {bnbBalance?.data?.value ? (
+            <span>
+              Balance:{" "}
+              <b>
+                {bnbBalance.data?.formatted?.substring(
+                  0,
+                  bnbBalance?.data?.formatted.indexOf(".") + 3
+                )}
+              </b>{" "}
+              $BNB
+            </span>
+          ) : (
+            <Skeleton sx={{ minWidth: 50 }} />
+          )}
           {usdtBalance.isSuccess ? (
             <span>
               Balance:{" "}

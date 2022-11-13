@@ -6,16 +6,26 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { WalletContextProvider } from "@dailycodeltd/ermu";
 import { HashRouter } from "react-router-dom";
 import { chains } from "@web3modal/ethereum";
-import React from "react";
 import { appRoutes } from "./routes";
 import renderRoutes from "./renderRoutes";
 import { SnackbarProvider } from "notistack";
-
+import { Web3Modal } from "@web3modal/react";
+/*
 const Web3Modal = React.lazy(() =>
   import("./components/lazyHelpers/Web3Modal")
-);
+);*/
 
 export function App() {
+  console.log(chains.goerli);
+
+  const getChain = () => {
+    for (const net in chains) {
+      if (chains[net].id === Number(process.env.NEXT_PUBLIC_CHAIN_ID)) {
+        return chains[net];
+      }
+    }
+  };
+
   return (
     <>
       <ConfigsProvider>
@@ -29,6 +39,19 @@ export function App() {
                   themeMode: configs.themeMode,
                 })}
               >
+                <Web3Modal
+                  config={{
+                    projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+                    network: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+                    theme: configs.themeMode,
+                    accentColor: "default",
+                    ethereum: {
+                      chains: [getChain()],
+                      appName: "ICO",
+                      autoConnect: true,
+                    },
+                  }}
+                />
                 <CssBaseline />
                 <SnackbarProvider
                   maxSnack={3}
@@ -45,21 +68,6 @@ export function App() {
                     </WalletContextProvider>
                   </RTL>
                 </SnackbarProvider>
-                <React.Suspense fallback={<div />}>
-                  <Web3Modal
-                    config={{
-                      projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-                      network: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
-                      theme: configs.themeMode,
-                      accentColor: "default",
-                      ethereum: {
-                        chains: [chains.goerli],
-                        appName: "BlueAssetsGroup",
-                        chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
-                      },
-                    }}
-                  />
-                </React.Suspense>
               </ThemeProvider>
             );
           }}

@@ -21,6 +21,7 @@ import utilisPreLaunchBuyWithUSDT from "../ethersUtils/saleUtils/UtilisPreLaunch
 import { useSnackbar } from "notistack";
 import utilisPreLaunchBuyWithBNB from "../ethersUtils/saleUtils/UtilisPreLaunchBuyWithBNB";
 import useMinBuy from "../hooks/PreLaunch/useMinBuy";
+import { useAccount } from "@web3modal/react";
 
 export const BuyModal = ({ open, setOpen, decimals, currency, balance }) => {
   const [value, setValue] = useState("0");
@@ -29,11 +30,11 @@ export const BuyModal = ({ open, setOpen, decimals, currency, balance }) => {
   const [inError, setInError] = useState("");
   const [waitingForNetwork] = useState(false);
   const walletContext = useWalletContext();
-  const { signer } = walletContext;
+  const { account } = useAccount();
 
   const minBuy = useMinBuy({
     address: process.env.PRESALE_ADDRESS,
-    provider: signer,
+    provider: walletContext.provider,
   });
 
   const [amountOut, setAmountOut] = useState();
@@ -115,7 +116,9 @@ export const BuyModal = ({ open, setOpen, decimals, currency, balance }) => {
           : ethers.utils.parseUnits(value, decimals);
         tx = await utilisPreLaunchBuyWithBNB(
           process.env.PRESALE_ADDRESS,
-          signer,
+          await account.connector.getSigner({
+            chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+          }),
           amount
         );
       } else {
@@ -124,7 +127,9 @@ export const BuyModal = ({ open, setOpen, decimals, currency, balance }) => {
           : ethers.utils.parseUnits(value, decimals);
         tx = await utilisPreLaunchBuyWithUSDT(
           process.env.PRESALE_ADDRESS,
-          signer,
+          await account.connector.getSigner({
+            chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+          }),
           amount
         );
       }
