@@ -230,8 +230,10 @@ const HomePage = () => {
           >
             {totalSale.data?.formatted && usdtPrice?.data?.formatted ? (
               "$" +
-              Number(totalSale?.data?.formatted) *
+              (
+                Number(totalSale?.data?.formatted) *
                 Number(usdtPrice?.data?.formatted)
+              ).toFixed(0)
             ) : (
               <Skeleton />
             )}
