@@ -10,7 +10,6 @@ const uniPairGetReserves = async (address, provider) => {
   const contract = getContract(address, provider, abi);
   const res = await contract.getReserves();
 
-  console.log("res", res);
   const {
     _reserve0: reserve0,
     _reserve1: reserve1,

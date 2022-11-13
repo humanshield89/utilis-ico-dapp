@@ -9,6 +9,7 @@ import { chains } from "@web3modal/ethereum";
 import React from "react";
 import { appRoutes } from "./routes";
 import renderRoutes from "./renderRoutes";
+import { SnackbarProvider } from "notistack";
 
 const Web3Modal = React.lazy(() =>
   import("./components/lazyHelpers/Web3Modal")
@@ -29,15 +30,21 @@ export function App() {
                 })}
               >
                 <CssBaseline />
-                <RTL direction={configs.direction}>
-                  <WalletContextProvider
-                    chainId={Number(process.env.NEXT_PUBLIC_CHAIN_ID)}
-                  >
-                    <HashRouter>
-                      {renderRoutes({ routes: appRoutes })}
-                    </HashRouter>
-                  </WalletContextProvider>
-                </RTL>
+                <SnackbarProvider
+                  maxSnack={3}
+                  autoHideDuration={1500}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                >
+                  <RTL direction={configs.direction}>
+                    <WalletContextProvider
+                      chainId={Number(process.env.NEXT_PUBLIC_CHAIN_ID)}
+                    >
+                      <HashRouter>
+                        {renderRoutes({ routes: appRoutes })}
+                      </HashRouter>
+                    </WalletContextProvider>
+                  </RTL>
+                </SnackbarProvider>
                 <React.Suspense fallback={<div />}>
                   <Web3Modal
                     config={{

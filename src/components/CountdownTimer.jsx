@@ -1,14 +1,42 @@
-import Countdown, { zeroPad } from "react-countdown";
+import { zeroPad } from "react-countdown";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 
-/*
-                <span style={{ fontFamily: "monospace" }}>
-          {zeroPad(days)}D {zeroPad(hours)}H {zeroPad(minutes)}M{" "}
-                    {zeroPad(seconds)}S
-        </span>
-* */
+export function getFormattedTimePeriod(timeInMillis) {
+  const timeInSeconds = timeInMillis / 1000;
+  const months = Math.floor(timeInSeconds / 3600 / 24 / 30);
+  const days = Math.floor(
+    (timeInSeconds - months * 30 * 24 * 3600) / 3600 / 24
+  );
+  const hours = Math.floor(
+    (timeInSeconds - days * 24 * 3600 - months * 30 * 24 * 3600) / 3600
+  );
+  const minutes = Math.floor(
+    (timeInSeconds -
+      hours * 3600 -
+      days * 24 * 3600 -
+      months * 30 * 24 * 3600) /
+      60
+  );
+  const seconds = Math.floor(
+    timeInSeconds -
+      months * 3600 * 30 * 24 -
+      days * 3600 * 24 -
+      hours * 3600 -
+      minutes * 60
+  );
+
+  return {
+    months,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+}
+
 /**
  *
  * @param date{Number} - unix datetime in seconds
@@ -17,19 +45,26 @@ import { Typography } from "@mui/material";
  * @constructor
  */
 const CountdownTimer = ({ date, ...props }) => {
-  console.log("CountdownTimer:date", date);
-  console.log("CountdownTimer:dateNow", Date.now() / 1000);
+  const [{ days, hours, minutes, seconds }, setTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    // print every second with cleanup
+    const interval = setInterval(() => {
+      setTime(getFormattedTimePeriod(date * 1000 - Date.now()));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [date]);
   return (
-    <Countdown
-      renderer={({ hours, minutes, seconds, days }) => (
-        <CountDownComponent
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          days={days}
-        />
-      )}
-      date={new Date(Number(date) * 1000)}
+    <CountDownComponent
+      hours={hours}
+      minutes={minutes}
+      seconds={seconds}
+      days={days}
       {...props}
     />
   );

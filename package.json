@@ -2,7 +2,7 @@
   "name": "react-mui-ethers-scaffold",
   "source": "public/index.html",
   "dependencies": {
-    "@dailycodeltd/ermu": "^1.0.7",
+    "@dailycodeltd/ermu": "^1.0.8",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
@@ -13,6 +13,7 @@
     "ethers": "^5.7.2",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.3",
+    "notistack": "^2.0.8",
     "preact": "^10.11.2",
     "preact-compat": "^3.19.0",
     "prop-types": "^15.8.1",

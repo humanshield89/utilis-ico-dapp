@@ -2,7 +2,6 @@ import useStartDate from "./useStartDate";
 import useEndDate from "./useEndDate";
 
 const usePreSale = ({ address, provider }) => {
-  console.log("provider", provider);
   const startTime = useStartDate({
     address,
     provider,

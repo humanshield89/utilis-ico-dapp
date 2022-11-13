@@ -24,7 +24,7 @@ const useSalePrice = ({ address, provider }) => {
       };
     },
     {
-      enabled: !!provider && !address && decimals.isSuccess,
+      enabled: !!provider && !!address && decimals.isSuccess,
     }
   );
 };

@@ -255,10 +255,10 @@
     stream-browserify "^3.0.0"
     util "^0.12.4"
 
-"@dailycodeltd/ermu@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@dailycodeltd/ermu/-/ermu-1.0.7.tgz#7893d490bfa6d8b36708ce1c27d4e6931521fce9"
-  integrity sha512-YYbsltXTvY93iOHWGJf83WC+dnBfDMLxDmtYtPbPRWLulwCkgNvJskF8ZLhWNIBuTqWCRbGRzH/wtGVbfvQKpQ==
+"@dailycodeltd/ermu@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@dailycodeltd/ermu/-/ermu-1.0.8.tgz#3674f5db9722acf92fe8c3573bccf7b73bae5f03"
+  integrity sha512-ZqWk4YdXJJ/T3Cr2Zb2W7VyC+zTCVt8ekvYti/cNwdJVUIlhbKgpe3lV4CMgiCtkPGR010mutr1JT1PN78fCrA==
 
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
@@ -3715,7 +3715,7 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.1:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -4536,6 +4536,14 @@ normalize-path@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
+
+notistack@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-2.0.8.tgz#78cdf34c64e311bf1d1d71c2123396bcdea5e95b"
+  integrity sha512-/IY14wkFp5qjPgKNvAdfL5Jp6q90+MjgKTPh4c81r/lW70KeuX6b9pE/4f8L4FG31cNudbN9siiFS5ql1aSLRw==
+  dependencies:
+    clsx "^1.1.0"
+    hoist-non-react-statics "^3.3.0"
 
 npm-run-path@^5.1.0:
   version "5.1.0"

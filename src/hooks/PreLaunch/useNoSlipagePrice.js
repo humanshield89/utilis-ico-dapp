@@ -25,10 +25,6 @@ const useNoSlipagePrice = ({ pairAddress, provider, tokenA, tokenB }) => {
 
     if (reserves.data && !!decimal0 && !!decimal1) {
       const { reserve0, reserve1 } = reserves.data;
-      console.log("decimal0", decimal0);
-      console.log("decimal1", decimal1);
-      console.log("reserve0/reserve1", reserve0 / reserve1);
-      console.log("reserve0/reserve1", reserve1 / reserve0);
       BigNumber.from(10).toBigInt();
       let priceA;
       let priceB;

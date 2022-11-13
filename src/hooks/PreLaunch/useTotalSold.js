@@ -20,7 +20,7 @@ const useTotalSold = ({ address, provider }) => {
       return {
         amount: sold,
         formatted: ethers.utils.formatUnits(sold, decimals.data),
-        decimals: decimals.data.toNumber(),
+        decimals: decimals.data,
       };
     },
     {

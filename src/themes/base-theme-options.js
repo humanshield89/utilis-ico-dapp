@@ -10,7 +10,7 @@ const baseThemeOptions = {
   },
   direction: "ltr",
   shape: {
-    borderRadius: 24,
+    borderRadius: 4,
   },
   typography: {
     button: {

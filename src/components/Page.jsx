@@ -2,7 +2,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import PropTypes from "prop-types";
 
 const Page = ({ children, title, description }) => {
-  console.log(title);
   return (
     <>
       <HelmetProvider>

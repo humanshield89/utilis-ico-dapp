@@ -16,6 +16,7 @@ const Header = () => {
           <Logo />
         </Box>
         <ConnectButton
+          sx={{ borderRadius: 6, p: 1, pl: 4, pr: 4, fontSize: "0.9em" }}
           color={"primary"}
           chainId={Number(process.env.NEXT_PUBLIC_CHAIN_ID)}
         />

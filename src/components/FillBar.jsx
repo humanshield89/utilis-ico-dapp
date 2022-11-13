@@ -36,6 +36,7 @@ export const FillBar = ({ percentage }) => {
           width: `${100 - percentage}%`,
           color: "yellow",
           fontWeight: 700,
+          //margin: 'auto',
         }}
         sx={{
           minHeight: "6px",
@@ -44,7 +45,7 @@ export const FillBar = ({ percentage }) => {
           fontSize: "0.8rem",
         }}
       >
-        {(100 - percentage).toFixed(2) + "%"}
+        {100 - percentage > 0 && (100 - percentage).toFixed(3) + "%"}
       </Box>
     </Box>
   );

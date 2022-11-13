@@ -19,12 +19,12 @@ const useTotalSale = ({ address, provider }) => {
 
       return {
         amount: total,
-        formated: ethers.utils.formatUnits(total, decimals?.data),
+        formatted: ethers.utils.formatUnits(total, decimals?.data),
         decimals: Number(decimals.data),
       };
     },
     {
-      enabled: !!provider && !address && !!chainId && decimals.isSuccess,
+      enabled: !!provider && !!address && !!chainId && decimals.isSuccess,
     }
   );
 
