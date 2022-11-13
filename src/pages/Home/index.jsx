@@ -121,12 +121,10 @@ const HomePage = () => {
             },
           });
         });
+    } else {
+      setBnbBalance({ data: {} });
     }
-  }, [account.isReady]);
-
-  useEffect(() => {
-    console.log("bnbBalance", bnbBalance);
-  }, [bnbBalance]);
+  }, [account.isReady, walletContext.address, walletContext.provider]);
 
   const usdtBalance = useERC20Balance({
     tokenAddress: process.env.USDT_ADDRESS,

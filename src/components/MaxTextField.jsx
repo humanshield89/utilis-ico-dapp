@@ -112,8 +112,13 @@ export const BuyModal = ({ open, setOpen, decimals, currency, balance }) => {
       let tx;
       if (currency?.name === "BNB") {
         amount = useMax
-          ? balance.amount.sub(process.env.MIN_BNB_LEFT_IN_WALLET)
+          ? balance.value.sub(process.env.MIN_BNB_LEFT_IN_WALLET)
           : ethers.utils.parseUnits(value, decimals);
+        if (amount < 0) {
+          throw new Error(
+            "Insufficient BNB in wallet (please account for gas)"
+          );
+        }
         tx = await utilisPreLaunchBuyWithBNB(
           process.env.PRESALE_ADDRESS,
           await account.connector.getSigner({
