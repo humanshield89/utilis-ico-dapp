@@ -16,8 +16,6 @@ const Web3Modal = React.lazy(() =>
 );*/
 
 export function App() {
-  console.log(chains.goerli);
-
   const getChain = () => {
     for (const net in chains) {
       if (chains[net].id === Number(process.env.NEXT_PUBLIC_CHAIN_ID)) {

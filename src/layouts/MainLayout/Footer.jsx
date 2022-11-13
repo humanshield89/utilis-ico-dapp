@@ -33,7 +33,9 @@ const Footer = () => {
           {` © ${new Date().getFullYear()}`}
         </Typography>
         <Typography>
-          <Link href="https://github.com/humanshield89">Visit Website</Link>
+          <Link target={"_blank"} href={process.env.WEBSITE_LINK}>
+            Visit Main Website
+          </Link>
         </Typography>
       </Container>
     </Box>

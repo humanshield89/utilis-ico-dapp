@@ -220,7 +220,7 @@ const HomePage = () => {
                   totalSale?.data?.amount
                     ?.sub(soldAmount?.data?.amount)
                     .mul(100n) / totalSale?.data?.amount
-                : 0
+                : 100
             }
           />
         </Box>
@@ -235,8 +235,10 @@ const HomePage = () => {
           >
             {soldAmount.data?.formatted && usdtPrice?.data?.formatted ? (
               "Reached $" +
-              Number(soldAmount?.data?.formatted) *
+              (
+                Number(soldAmount?.data?.formatted) *
                 Number(usdtPrice?.data?.formatted)
+              ).toFixed(2)
             ) : (
               <Skeleton />
             )}
@@ -275,12 +277,14 @@ const HomePage = () => {
         >
           <Typography variant={"body2"}>
             1 $USDT ={" "}
-            {1 / Number(usdtPrice.data?.formatted) +
+            {(1 / Number(usdtPrice.data?.formatted)).toFixed(2) +
               " $" +
               process.env.TOKEN_SYMBOL}
             <br />1 $BNB ={" "}
-            {Number(noSlippagePrice?.tokenAPrice?.formatted) /
-              Number(usdtPrice.data?.formatted) +
+            {(
+              Number(noSlippagePrice?.tokenAPrice?.formatted) /
+              Number(usdtPrice.data?.formatted)
+            ).toFixed(2) +
               " $" +
               process.env.TOKEN_SYMBOL}
           </Typography>
