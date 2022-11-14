@@ -1,12 +1,13 @@
 import { zeroPad } from "react-countdown";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTheme } from "@mui/system";
 
 export function getFormattedTimePeriod(timeInMillis) {
   const timeInSeconds = timeInMillis / 1000;
-  const months = Math.floor(timeInSeconds / 3600 / 24 / 30);
+  const months = 0; //Math.floor(timeInSeconds / 3600 / 24 / 30);
   const days = Math.floor(
     (timeInSeconds - months * 30 * 24 * 3600) / 3600 / 24
   );
@@ -109,12 +110,14 @@ CountDownComponent.propTypes = {
 };
 
 const TwoDots = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Typography
       variant={"h2"}
       sx={{
         textAlign: "center",
-        p: 1,
+        p: isMobile ? "2px" : 1,
         pt: 2,
         pb: 2,
         lineHeight: 1,
