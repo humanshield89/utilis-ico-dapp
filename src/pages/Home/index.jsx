@@ -210,54 +210,58 @@ const HomePage = () => {
           }
         </Typography>
         <Box sx={{ minHeight: 20 }} />
-        <Box style={{ background: "grey", borderRadius: 8 }}>
-          <FillBar
-            percentage={
-              totalSale.data?.formatted &&
-              soldAmount?.data?.formatted &&
-              totalSale.data?.amount > 0
-                ? // eslint-disable-next-line no-unsafe-optional-chaining
-                  totalSale?.data?.amount
-                    ?.sub(soldAmount?.data?.amount)
-                    .mul(100n) / totalSale?.data?.amount
-                : 100
-            }
-          />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-          }}
-        >
-          <Typography
-            variant={"subtitle2"}
-            sx={{ textAlign: "left", flex: 1, pl: 1 }}
+        {false && (
+          <Box style={{ background: "grey", borderRadius: 8 }}>
+            <FillBar
+              percentage={
+                totalSale.data?.formatted &&
+                soldAmount?.data?.formatted &&
+                totalSale.data?.amount > 0
+                  ? // eslint-disable-next-line no-unsafe-optional-chaining
+                    totalSale?.data?.amount
+                      ?.sub(soldAmount?.data?.amount)
+                      .mul(100n) / totalSale?.data?.amount
+                  : 100
+              }
+            />
+          </Box>
+        )}
+        {false && (
+          <Box
+            sx={{
+              display: "flex",
+            }}
           >
-            {soldAmount.data?.formatted && usdtPrice?.data?.formatted ? (
-              "Reached $" +
-              (
-                Number(soldAmount?.data?.formatted) *
-                Number(usdtPrice?.data?.formatted)
-              ).toFixed(2)
-            ) : (
-              <Skeleton />
-            )}
-          </Typography>
-          <Typography
-            variant={"subtitle2"}
-            sx={{ textAlign: "right", flex: 1, pr: 1 }}
-          >
-            {totalSale.data?.formatted && usdtPrice?.data?.formatted ? (
-              "$" +
-              (
-                Number(totalSale?.data?.formatted) *
-                Number(usdtPrice?.data?.formatted)
-              ).toFixed(0)
-            ) : (
-              <Skeleton />
-            )}
-          </Typography>
-        </Box>
+            <Typography
+              variant={"subtitle2"}
+              sx={{ textAlign: "left", flex: 1, pl: 1 }}
+            >
+              {soldAmount.data?.formatted && usdtPrice?.data?.formatted ? (
+                "Reached $" +
+                (
+                  Number(soldAmount?.data?.formatted) *
+                  Number(usdtPrice?.data?.formatted)
+                ).toFixed(2)
+              ) : (
+                <Skeleton />
+              )}
+            </Typography>
+            <Typography
+              variant={"subtitle2"}
+              sx={{ textAlign: "right", flex: 1, pr: 1 }}
+            >
+              {totalSale.data?.formatted && usdtPrice?.data?.formatted ? (
+                "$" +
+                (
+                  Number(totalSale?.data?.formatted) *
+                  Number(usdtPrice?.data?.formatted)
+                ).toFixed(0)
+              ) : (
+                <Skeleton />
+              )}
+            </Typography>
+          </Box>
+        )}
 
         <Typography
           sx={{
